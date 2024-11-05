@@ -12,12 +12,13 @@ source:
     - patches/0001-pylibfdt-fix-with-Python-3.10.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - bison
     - flex
     - make
@@ -36,6 +37,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
@@ -94,6 +96,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
         - swig
       host:
@@ -131,6 +134,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
     test:
       commands:
