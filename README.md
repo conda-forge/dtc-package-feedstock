@@ -26,19 +26,6 @@ libfdt, a utility library for reading and manipulating the Linux Kernel
 Device Tree binary format.
 
 
-About pylibfdt
---------------
-
-
-
-Package license: GPL-2.0-or-later OR BSD-2-Clause
-
-Summary: Python Bindings for Linux Kernel Device Tree library (libfdt)
-
-Python bindings for libfdt, a utility library for reading and manipulating the Linux Kernel
-Device Tree binary format.
-
-
 About dtc
 ---------
 
@@ -50,6 +37,19 @@ Summary: Linux Kernel Device Tree Compiler (dtc)
 
 Device Tree Compiler (dtc) toolchain for working with device
 tree source and binary files
+
+
+About pylibfdt
+--------------
+
+
+
+Package license: GPL-2.0-or-later OR BSD-2-Clause
+
+Summary: Python Bindings for Linux Kernel Device Tree library (libfdt)
+
+Python bindings for libfdt, a utility library for reading and manipulating the Linux Kernel
+Device Tree binary format.
 
 
 Current build status
