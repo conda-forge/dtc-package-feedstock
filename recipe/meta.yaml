@@ -20,7 +20,7 @@ requirements:
     - bison
     - flex
     - make
-    - swig
+    - swig <4.2
     - pkg-config
   host:
     - python {{ python }}
@@ -97,7 +97,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - make
-        - swig
+        - swig <4.2
       host:
         - python {{ python }}
         - setuptools
