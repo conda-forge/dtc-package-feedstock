@@ -143,10 +143,10 @@ outputs:
         - test -f $PREFIX/include/libfdt.h
         - test -f $PREFIX/include/fdt.h
         - test -f $PREFIX/include/libfdt_env.h
-        - test -f $PREFIX/lib/libfdt-{{ version }}${SHLIB_EXT}
         - test -f $PREFIX/lib/libfdt.a
         - test -f $PREFIX/lib/libfdt${SHLIB_EXT}
         - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ major_ver }}
+        - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ version }}
     about:
       summary: 'Linux Kernel Device Tree library (libfdt)'
       description: |
