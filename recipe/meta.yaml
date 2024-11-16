@@ -17,6 +17,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
+    - setuptools
     - bison
     - flex
     - make
@@ -95,6 +96,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - setuptools
         - make
         - swig
       host:
@@ -133,6 +135,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - setuptools
         - make
     test:
       commands:
