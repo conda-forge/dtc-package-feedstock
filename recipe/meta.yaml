@@ -1,4 +1,4 @@
-{% set version = '1.6.1' %}
+{% set version = '1.7.2' %}
 {% set major_ver = version.split(".")[0] %}
 
 package:
@@ -7,17 +7,16 @@ package:
 
 source:
   url: https://git.kernel.org/pub/scm/utils/dtc/dtc.git/snapshot/dtc-{{ version }}.tar.gz
-  sha256: 6401c9a0f577a270df4632bf0f3e5454ccc7a5ca3caefa67a3e1c29c9c6b8c60
-  patches:
-    - patches/0001-pylibfdt-fix-with-Python-3.10.patch
+  sha256: 8f1486962f093f28a2f79f01c1fd82f144ef640ceabe555536d43362212ceb7c
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - bison
     - flex
     - make
@@ -36,6 +35,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
@@ -48,7 +48,7 @@ outputs:
         - {{ compiler('c') }}
         - make
       source_files:
-        - util.c 
+        - util.c
         - util.h
         - version_gen.h
         - tests
@@ -86,7 +86,7 @@ outputs:
        tree source and binary files
       license: GPL-2.0-or-later
       license_family: GPL2
-      license_file: 
+      license_file:
         - GPL
         - README.license
   - name: pylibfdt
@@ -94,6 +94,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
         - swig
       host:
@@ -115,11 +116,11 @@ outputs:
     about:
       summary: 'Python Bindings for Linux Kernel Device Tree library (libfdt)'
       description: |
-       Python bindings for libfdt, a utility library for reading and manipulating the Linux Kernel
-       Device Tree binary format.
+        Python bindings for libfdt, a utility library for reading and manipulating the Linux Kernel
+        Device Tree binary format.
       license: GPL-2.0-or-later OR BSD-2-Clause
       license_family: BSD
-      license_file: 
+      license_file:
         - GPL
         - BSD-2-Clause
         - README.license
@@ -131,6 +132,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - {{ stdlib("c") }}
         - make
     test:
       commands:
@@ -146,11 +148,11 @@ outputs:
     about:
       summary: 'Linux Kernel Device Tree library (libfdt)'
       description: |
-       libfdt, a utility library for reading and manipulating the Linux Kernel
-       Device Tree binary format.
+        libfdt, a utility library for reading and manipulating the Linux Kernel
+        Device Tree binary format.
       license: GPL-2.0-or-later OR BSD-2-Clause
       license_family: BSD
-      license_file: 
+      license_file:
         - GPL
         - BSD-2-Clause
         - README.license
