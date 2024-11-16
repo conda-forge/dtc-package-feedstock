@@ -25,6 +25,7 @@ requirements:
   host:
     - python {{ python }}
     - setuptools
+    - pip
     - yaml
     - valgrind
   run:
@@ -104,6 +105,7 @@ outputs:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
         - setuptools
+        - pip
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
         - python {{ python }}
