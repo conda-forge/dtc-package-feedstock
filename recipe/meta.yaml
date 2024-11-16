@@ -38,6 +38,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - make
+        - pkg-config
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - yaml
@@ -97,6 +98,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - make
+        - pkg-config
         - swig <4.2
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
@@ -138,6 +140,7 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
         - make
+        - pkg-config
     test:
       commands:
         # tests/run_tests.sh -t libfdt depends on having dtc and the other binaries installed
