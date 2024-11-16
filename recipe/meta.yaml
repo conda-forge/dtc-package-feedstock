@@ -99,9 +99,11 @@ outputs:
         - make
         - swig <4.2
       host:
+        - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
         - setuptools
       run:
+        - {{ pin_subpackage("libfdt", max_pin="x.x") }}
         - python {{ python }}
     test:
       imports:
