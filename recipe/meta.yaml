@@ -17,7 +17,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
-    - setuptools
     - bison
     - flex
     - make
@@ -25,6 +24,7 @@ requirements:
     - pkg-config
   host:
     - python {{ python }}
+    - setuptools
     - yaml
     - valgrind
   run:
@@ -96,11 +96,11 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
-        - setuptools
         - make
         - swig
       host:
         - python {{ python }}
+        - setuptools
       run:
         - python {{ python }}
     test:
@@ -135,7 +135,6 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
-        - setuptools
         - make
     test:
       commands:
