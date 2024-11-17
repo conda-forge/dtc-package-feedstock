@@ -19,7 +19,7 @@ requirements:
     - {{ stdlib("c") }}
     - bison
     - flex
-    - make
+    - meson
     - swig <4.2
     - pkg-config
   host:
@@ -32,12 +32,14 @@ requirements:
 
 outputs:
   - name: dtc
-    script: install.sh
+    files:
+      include:
+        - bin/*
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
-        - make
+        - meson
         - pkg-config
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
@@ -92,12 +94,14 @@ outputs:
         - GPL
         - README.license
   - name: pylibfdt
-    script: install.sh
+    files:
+      include:
+        - lib/python*/site-packages/
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
-        - make
+        - meson
         - pkg-config
         - swig <4.2
       host:
@@ -131,7 +135,12 @@ outputs:
         - BSD-2-Clause
         - README.license
   - name: libfdt
-    script: install.sh
+    files:
+      include:
+        - include/
+        - lib/
+      exclude:
+        - lib/python*/site-packages/
     build:
       run_exports:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -139,7 +148,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
-        - make
+        - meson
         - pkg-config
     test:
       commands:
