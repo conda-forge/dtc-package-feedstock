@@ -35,15 +35,8 @@ requirements:
 outputs:
   - name: dtc
     requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ stdlib("c") }}
-        - meson
-        - pkg-config
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
-        - yaml
-        - valgrind
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
     files:
@@ -112,12 +105,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
-    requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ stdlib("c") }}
-        - meson
-        - pkg-config
     files:
       - include/fdt.h
       - include/libfdt.h
