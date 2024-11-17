@@ -72,21 +72,16 @@ outputs:
         - README.license
   - name: pylibfdt
     requirements:
-      build:
-        - {{ compiler('c') }}
-        - {{ stdlib("c") }}
-        - meson
-        - pkg-config
-        - swig <4.2
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
-        - setuptools
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
         - python {{ python }}
     files:
-      - lib/python*/site-packages/**libfdt**
+      - lib/python*/site-packages/_libfdt*
+      - lib/python*/site-packages/libfdt*
+      - lib/python*/site-packages/libfdt*/**
     test:
       imports:
         - libfdt
