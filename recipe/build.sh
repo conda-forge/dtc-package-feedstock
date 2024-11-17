@@ -3,8 +3,6 @@
 set -e
 set -x
 
-export DESTDIR=$PREFIX
-
 if [[ "$(uname -s)" = "Darwin" ]]; then
     # Tests don't build on osx due to GCC-specific assembly directives in
     # tests/trees.S So, we only do minimal existance and import testing on the
