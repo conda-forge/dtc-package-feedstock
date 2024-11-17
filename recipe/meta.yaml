@@ -21,12 +21,12 @@ requirements:
     - {{ stdlib("c") }}
     - bison
     - flex
-    - meson
     - swig <4.2
     - pkg-config
   host:
     - python {{ python }}
     - setuptools
+    - meson
     - yaml
     - valgrind
   run:
