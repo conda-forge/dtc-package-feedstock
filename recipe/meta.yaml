@@ -21,7 +21,6 @@ requirements:
     - {{ stdlib("c") }}
     - bison
     - flex
-    - swig <4.2
     - pkg-config
   host:
     - python {{ python }}
@@ -35,6 +34,9 @@ requirements:
 outputs:
   - name: dtc
     requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ stdlib("c") }}
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - yaml
@@ -72,18 +74,21 @@ outputs:
         - GPL
         - README.license
   - name: pylibfdt
+    script: {{ PYTHON }} -m pip install . -vv
     requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ stdlib("c") }}
+        - swig <4.2
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
+        - setuptools
+        - meson
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
         - python {{ python }}
-    files:
-      - lib/python*/site-packages/_libfdt*
-      - lib/python*/site-packages/libfdt*
-      - lib/python*/site-packages/libfdt*/**
     test:
       imports:
         - libfdt
@@ -102,6 +107,12 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ stdlib("c") }}
+      host:
+        - yaml
     files:
       - include/fdt.h
       - include/libfdt.h
