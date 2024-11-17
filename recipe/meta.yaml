@@ -37,6 +37,7 @@ outputs:
     requirements:
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
+        - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
     files:
@@ -75,6 +76,7 @@ outputs:
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
+        - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
         - python {{ python }}
