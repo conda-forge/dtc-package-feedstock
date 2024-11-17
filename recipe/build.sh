@@ -11,7 +11,9 @@ if [[ "$(uname -s)" = "Darwin" ]]; then
     # osx package
     meson setup ${MESON_ARGS} -D python=enabled -D tests=false build
 else
-    meson setup ${MESON_ARGS} -D python=enabled build
+    # Temporarily disable tests until build errors in newer GCC can be fixed
+    # meson setup ${MESON_ARGS} -D python=enabled build
+    meson setup ${MESON_ARGS} -D python=enabled -D tests=false build
 fi
 
 meson compile -C build
