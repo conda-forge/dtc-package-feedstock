@@ -25,7 +25,6 @@ requirements:
     - python {{ python }}
     - meson
     - yaml
-    - valgrind
   run:
     - python {{ python }}
 
