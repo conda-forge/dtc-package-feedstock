@@ -24,6 +24,7 @@ The manpage `strtok(3)` the following.
 So set it to NULL.
 
 Signed-off-by: Brandon Maier <brandon.maier@gmail.com>
+Upstream: https://github.com/dgibson/dtc/pull/158
 ---
  tests/sw_tree1.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
