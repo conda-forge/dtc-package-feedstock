@@ -1,6 +1,5 @@
 {% set version = '1.7.2' %}
 {% set major_ver = version.split(".")[0] %}
-{% set build_number = 0 %}
 
 package:
   name: dtc-package
@@ -13,7 +12,7 @@ source:
     - patches/0001-tests-sw_tree1.c-fix-unitialized-saveptr.patch
 
 build:
-  number: {{ build_number }}
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -80,7 +79,6 @@ outputs:
         - README.license
   - name: pylibfdt
     build:
-      number: {{ build_number }}
       script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     requirements:
       build:
