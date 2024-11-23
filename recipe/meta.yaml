@@ -49,7 +49,13 @@ outputs:
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
     files:
-      - bin/*
+      - bin/convert-dtsv0
+      - bin/dtc
+      - bin/dtdiff
+      - bin/fdtdump
+      - bin/fdtget
+      - bin/fdtoverlay
+      - bin/fdtput
     test:
       commands:
         - convert-dtsv0 --help
@@ -122,8 +128,10 @@ outputs:
         - meson
         - yaml
     files:
-      - include/*
-      - lib/*
+      - include/fdt.h
+      - include/libfdt.h
+      - include/libfdt_env.h
+      - lib/libfdt.*
     test:
       commands:
         # tests/run_tests.sh -t libfdt depends on having dtc and the other binaries installed
