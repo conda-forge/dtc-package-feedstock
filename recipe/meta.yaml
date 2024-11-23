@@ -49,13 +49,7 @@ outputs:
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
     files:
-      - bin/convert-dtsv0
-      - bin/dtc
-      - bin/dtdiff
-      - bin/fdtdump
-      - bin/fdtget
-      - bin/fdtoverlay
-      - bin/fdtput
+      - bin/*
     test:
       commands:
         - convert-dtsv0 --help
@@ -128,11 +122,8 @@ outputs:
         - meson
         - yaml
     files:
-      - include/fdt.h
-      - include/libfdt.h
-      - include/libfdt_env.h
-      - lib/libfdt.a
-      - lib/libfdt.so*
+      - include/*
+      - lib/*
     test:
       commands:
         # tests/run_tests.sh -t libfdt depends on having dtc and the other binaries installed
@@ -142,8 +133,9 @@ outputs:
         - test -f $PREFIX/include/libfdt_env.h
         - test -f $PREFIX/lib/libfdt.a
         - test -f $PREFIX/lib/libfdt${SHLIB_EXT}
-        - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ major_ver }}
-        - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ version }}
+        - test -f $PREFIX/lib/libfdt.{{ major_ver }}${SHLIB_EXT}  # [osx]
+        - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ major_ver }}  # [linux]
+        - test -f $PREFIX/lib/libfdt${SHLIB_EXT}.{{ version }}  # [linux]
     about:
       summary: 'Linux Kernel Device Tree library (libfdt)'
       description: |
