@@ -38,6 +38,9 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - bison
+        - flex
+        - pkg-config
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
@@ -116,6 +119,9 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
+        - bison
+        - flex
+        - pkg-config
       host:
         - python {{ python }}
         - meson
