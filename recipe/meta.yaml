@@ -1,5 +1,6 @@
 {% set version = '1.7.2' %}
 {% set major_ver = version.split(".")[0] %}
+{% set build_number = 0 %}
 
 package:
   name: dtc-package
@@ -12,7 +13,7 @@ source:
     - patches/0001-pylibfdt-remote-DESTDIR-from-setup.py-install.patch
 
 build:
-  number: 0
+  number: {{ build_number }}
   skip: true  # [win]
 
 requirements:
@@ -76,8 +77,8 @@ outputs:
         - GPL
         - README.license
   - name: pylibfdt
-    script: install.sh
     build:
+      number: {{ build_number }}
       script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     requirements:
       build:

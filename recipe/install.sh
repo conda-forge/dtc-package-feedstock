@@ -6,9 +6,6 @@ case "$PKG_NAME" in
 dtc)
 	meson install -C build
 	;;
-pylibfdt)
-	python -m pip install . -vv --no-deps --no-build-isolation
-	;;
 libfdt)
 	meson install -C build
 	;;
