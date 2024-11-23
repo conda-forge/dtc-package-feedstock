@@ -24,7 +24,6 @@ requirements:
     - pkg-config
   host:
     - python {{ python }}
-    - setuptools
     - meson
     - yaml
     - valgrind
@@ -33,12 +32,15 @@ requirements:
 
 outputs:
   - name: dtc
+    script: install.sh
     requirements:
       build:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
+        - python {{ python }}
+        - meson
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -74,7 +76,9 @@ outputs:
         - GPL
         - README.license
   - name: pylibfdt
-    script: {{ PYTHON }} -m pip install . -vv
+    script: install.sh
+    build:
+      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
     requirements:
       build:
         - {{ compiler('c') }}
@@ -84,7 +88,6 @@ outputs:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
         - setuptools
-        - meson
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -104,6 +107,7 @@ outputs:
         - BSD-2-Clause
         - README.license
   - name: libfdt
+    script: install.sh
     build:
       run_exports:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -112,9 +116,12 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib("c") }}
       host:
+        - python {{ python }}
+        - meson
         - yaml
     files:
       - include/fdt.h
+    pylibfdt)
       - include/libfdt.h
       - include/libfdt_env.h
       - lib/libfdt.a
