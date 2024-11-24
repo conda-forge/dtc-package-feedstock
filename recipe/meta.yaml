@@ -12,7 +12,7 @@ source:
     - patches/0001-tests-sw_tree1.c-fix-unitialized-saveptr.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
