@@ -166,4 +166,5 @@ about:
 extra:
   recipe-maintainers:
     - timsnyder
+    - blmaier
   feedstock-name: dtc-package
