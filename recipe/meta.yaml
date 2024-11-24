@@ -76,6 +76,7 @@ outputs:
       license_file:
         - GPL
         - README.license
+
   - name: pylibfdt
     build:
       script: python -m pip install . -vv --no-deps --no-build-isolation
@@ -107,6 +108,7 @@ outputs:
         - GPL
         - BSD-2-Clause
         - README.license
+
   - name: libfdt
     script: install.sh
     build:
@@ -120,7 +122,6 @@ outputs:
         - flex
         - pkg-config
       host:
-        - python {{ python }}
         - meson
         - yaml
     files:
