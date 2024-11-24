@@ -84,7 +84,7 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib('c') }}
-        - swig <4.2
+        - swig
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
