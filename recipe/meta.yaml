@@ -41,7 +41,6 @@ outputs:
         - pkg-config
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
-        - python {{ python }}
         - meson
         - yaml
       run:
