@@ -23,11 +23,8 @@ requirements:
     - flex
     - pkg-config
   host:
-    - python {{ python }}
     - meson
     - yaml
-  run:
-    - python {{ python }}
 
 outputs:
   - name: dtc
