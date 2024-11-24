@@ -1,0 +1,47 @@
+From b657e119100c512c4de88884bd4ad95b464fcebc Mon Sep 17 00:00:00 2001
+From: Brandon Maier <brandon.maier@gmail.com>
+Date: Sat, 23 Nov 2024 13:21:28 -0600
+Subject: [PATCH] tests/sw_tree1.c: fix unitialized saveptr
+
+Building the dtc tests on the Conda build system results in the
+following error.
+
+  In function '__strtok_r_1c',                                                                                                                                     2024-11-23T19:17:20.7930512Z     inlined from 'main' at ../tests/sw_tree1.c:140:17:
+  $BUILD_PREFIX/x86_64-conda-linux-gnu/sysroot/usr/include/bits/string2.h:1177:10: error: 'saveptr' may be used uninitialized [-Werror=maybe-uninitialized]
+   1177 |   while (*__s == __sep)
+        |          ^~~~
+  ../tests/sw_tree1.c: In function 'main':
+  ../tests/sw_tree1.c:137:39: note: 'saveptr' was declared here
+    137 |                 char *str = argv[2], *saveptr, *tok;
+        |                                       ^~~~~~~
+  cc1: all warnings being treated as errors
+
+The manpage `strtok(3)` the following.
+
+  VERSIONS
+    On some implementations, *saveptr is required to be NULL on the first call to strtok_r() that is being used to parse str.
+
+So set it to NULL.
+
+Signed-off-by: Brandon Maier <brandon.maier@gmail.com>
+Upstream: https://github.com/dgibson/dtc/pull/158
+---
+ tests/sw_tree1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/sw_tree1.c b/tests/sw_tree1.c
+index 7069ace..7aa808c 100644
+--- a/tests/sw_tree1.c
++++ b/tests/sw_tree1.c
+@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
+ 		}
+ 	}
+ 	if (argc == 3) {
+-		char *str = argv[2], *saveptr, *tok;
++		char *str = argv[2], *saveptr = NULL, *tok;
+ 		bool default_flag = false;
+ 
+ 		while ((tok = strtok_r(str, ",", &saveptr)) != NULL) {
+-- 
+2.47.0
+
