@@ -10,9 +10,10 @@ source:
   sha256: 8f1486962f093f28a2f79f01c1fd82f144ef640ceabe555536d43362212ceb7c
   patches:
     - patches/0001-tests-sw_tree1.c-fix-unitialized-saveptr.patch
+    - patches/0002-pylibfdt-libfdt.i-fix-backwards-compatibility-of-ret.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -94,6 +95,15 @@ outputs:
     test:
       imports:
         - libfdt
+      # we can only due extended testing on linux due to GCC-specific assembly being used to
+      # generate the dtb files below
+      source_files:                # [linux]
+        - tests/                   # [linux]
+        - build/dtc                # [linux]
+        - build/tests/test_tree1.dtb     # [linux]
+        - build/tests/aliases.dtb        # [linux]
+      commands:  # [linux]
+        - "cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt"  # [linux]
     about:
       summary: 'Python Bindings for Linux Kernel Device Tree library (libfdt)'
       description: |
