@@ -3,14 +3,15 @@
 set -e
 set -x
 
-if [[ "$(uname -s)" = "Darwin" ]]; then
+if  [[ "$CONDA_BUILD_CROSS_COMPILATION" == "1" || "$(uname -s)" = "Darwin" ]]; then
     # Tests don't build on osx due to GCC-specific assembly directives in
     # tests/trees.S So, we only do minimal existance and import testing on the
     # osx package
-    meson setup ${MESON_ARGS} -D python=disabled -D tests=false build
+    tests=false
 else
-    meson setup ${MESON_ARGS} -D python=disabled -D tests=true build
+    tests=true
 fi
 
+meson setup ${MESON_ARGS} -D python=disabled -D tests=$tests build
 meson compile -C build
 meson test -C build
