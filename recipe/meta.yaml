@@ -13,7 +13,7 @@ source:
     - patches/0002-pylibfdt-libfdt.i-fix-backwards-compatibility-of-ret.patch
 
 build:
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
@@ -23,8 +23,8 @@ requirements:
     - bison
     - flex
     - pkg-config
-  host:
     - meson
+  host:
     - yaml
 
 outputs:
@@ -37,9 +37,9 @@ outputs:
         - bison
         - flex
         - pkg-config
+        - meson
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
-        - meson
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -82,6 +82,8 @@ outputs:
       build:
         - {{ compiler('c') }}
         - {{ stdlib('c') }}
+        - cross-python_{{ target_platform }}    # [build_platform != target_platform]
+        - python {{ python }}                   # [build_platform != target_platform]
         - swig
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
@@ -97,13 +99,13 @@ outputs:
         - libfdt
       # we can only due extended testing on linux due to GCC-specific assembly being used to
       # generate the dtb files below
-      source_files:                # [linux]
-        - tests/                   # [linux]
-        - build/dtc                # [linux]
-        - build/tests/test_tree1.dtb     # [linux]
-        - build/tests/aliases.dtb        # [linux]
-      commands:  # [linux]
-        - "cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt"  # [linux]
+      source_files:                # [build_platform == target_platform and linux]
+        - tests/                   # [build_platform == target_platform and linux]
+        - build/dtc                # [build_platform == target_platform and linux]
+        - build/tests/test_tree1.dtb     # [build_platform == target_platform and linux]
+        - build/tests/aliases.dtb        # [build_platform == target_platform and linux]
+      commands:  # [build_platform == target_platform and linux]
+        - "cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt"  # [build_platform == target_platform and linux]
     about:
       summary: 'Python Bindings for Linux Kernel Device Tree library (libfdt)'
       description: |
@@ -128,8 +130,8 @@ outputs:
         - bison
         - flex
         - pkg-config
-      host:
         - meson
+      host:
         - yaml
     files:
       - include/fdt.h
