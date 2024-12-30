@@ -83,19 +83,17 @@ outputs:
         - {{ compiler('c') }}
         - {{ stdlib('c') }}
         - cross-python_{{ target_platform }}    # [build_platform != target_platform]
-        - python                                # [build_platform != target_platform]
-        - cython                                # [build_platform != target_platform]
+        - python {{ python }}                   # [build_platform != target_platform]
         - swig
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
         - python {{ python }}
-        - cython
         - setuptools
         - pip
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
-        - python
+        - python {{ python }}
     test:
       imports:
         - libfdt
