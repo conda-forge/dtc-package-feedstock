@@ -37,9 +37,9 @@ outputs:
         - bison
         - flex
         - pkg-config
+        - meson
       host:
         - {{ pin_subpackage("libfdt", exact=True) }}
-        - meson
         - yaml
       run:
         - {{ pin_subpackage("libfdt", max_pin="x.x") }}
@@ -128,8 +128,8 @@ outputs:
         - bison
         - flex
         - pkg-config
-      host:
         - meson
+      host:
         - yaml
     files:
       - include/fdt.h
