@@ -13,7 +13,7 @@ source:
     - patches/0002-pylibfdt-libfdt.i-fix-backwards-compatibility-of-ret.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [win]
 
 requirements:
