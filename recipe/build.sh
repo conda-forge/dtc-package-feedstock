@@ -8,12 +8,13 @@ if [[ "$(uname -s)" = "Darwin" ]]; then
     # tests/trees.S So, we only do minimal existance and import testing on the
     # osx package
     tests=false
-elif [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
-    tests=true
 else
-    tests=false
+    tests=true
 fi
 
 meson setup ${MESON_ARGS} -D python=disabled -D tests=$tests build
 meson compile -C build
-meson test -C build
+
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR:-}" != "" ]]; then
+    meson test -C build
+fi
