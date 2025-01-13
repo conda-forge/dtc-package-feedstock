@@ -99,13 +99,13 @@ outputs:
         - libfdt
       # we can only due extended testing on linux due to GCC-specific assembly being used to
       # generate the dtb files below
-      source_files:                # [build_platform == target_platform and linux]
-        - tests/                   # [build_platform == target_platform and linux]
-        - build/dtc                # [build_platform == target_platform and linux]
-        - build/tests/test_tree1.dtb     # [build_platform == target_platform and linux]
-        - build/tests/aliases.dtb        # [build_platform == target_platform and linux]
-      commands:  # [build_platform == target_platform and linux]
-        - "cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt"  # [build_platform == target_platform and linux]
+      source_files:                # [linux]
+        - tests/                   # [linux]
+        - build/dtc                # [linux]
+        - build/tests/test_tree1.dtb     # [linux]
+        - build/tests/aliases.dtb        # [linux]
+      commands:  # [linux]
+        - "cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt"  # [linux]
     about:
       summary: 'Python Bindings for Linux Kernel Device Tree library (libfdt)'
       description: |
