@@ -3,6 +3,10 @@
 set -e
 set -x
 
+echo "!!! CROSSCOMPILING_EMULATOR: ${CROSSCOMPILING_EMULATOR:-}"
+echo "!!! meson_cross_file.txt"
+cat "$BUILD_PREFIX/meson_cross_file.txt"
+
 if [[ "$(uname -s)" = "Darwin" ]]; then
     # Tests don't build on osx due to GCC-specific assembly directives in
     # tests/trees.S So, we only do minimal existance and import testing on the
