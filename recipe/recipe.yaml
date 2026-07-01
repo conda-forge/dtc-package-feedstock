@@ -68,9 +68,10 @@ outputs:
       name: pylibfdt
     build:
       script:
-        - echo "python = '${PREFIX}/bin/python'" >> ${CONDA_PREFIX}/meson_cross_file.txt
+        # - echo "python = '${PREFIX}/bin/python'" >> ${CONDA_PREFIX}/meson_cross_file.txt
         - MESON_ARGS_REDUCED="$(echo $MESON_ARGS | sed 's/--buildtype release //g')"
-        - $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} || (cat builddir/meson-logs/meson-log.txt && exit 1)
+        - $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} -D tests=false || (cat builddir/meson-logs/meson-log.txt && exit 1)
+        # - $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} || (cat builddir/meson-logs/meson-log.txt && exit 1)
         - pip install dist/*.whl
         # - meson setup ${MESON_ARGS} -D python=enabled -D wheel-only=true build
         # - meson install -C build
