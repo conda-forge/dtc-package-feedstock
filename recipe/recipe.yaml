@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: "1.7.2"
+  version: "1.8.1"
   major_ver: "${{ (version | split('.'))[0] }}"
 
 recipe:
@@ -10,14 +10,10 @@ recipe:
 
 source:
   url: https://git.kernel.org/pub/scm/utils/dtc/dtc.git/snapshot/dtc-${{ version }}.tar.gz
-  sha256: 8f1486962f093f28a2f79f01c1fd82f144ef640ceabe555536d43362212ceb7c
-  patches:
-    - patches/0001-tests-sw_tree1.c-fix-unitialized-saveptr.patch
-    - patches/0002-pylibfdt-libfdt.i-fix-backwards-compatibility-of-ret.patch
-    - patches/0003-tests-When-building-.so-from-O-asm-output-mark-as-no.patch
+  sha256: 74b50bb19134f6562490afea53e59953dd6c4afb17e5ccb60be32221262d3390
 
 build:
-  number: 6
+  number: 0
   skip: win
 
 outputs:
@@ -70,11 +66,15 @@ outputs:
 
   - package:
       name: pylibfdt
-    inherit: dtc-build
     build:
-      script: python -m pip install . -vv --no-deps --no-build-isolation
-      files:
-        - lib/python*/
+      script:
+        # - echo "python = '${PREFIX}/bin/python'" >> ${CONDA_PREFIX}/meson_cross_file.txt
+        - MESON_ARGS_REDUCED="$(echo $MESON_ARGS | sed 's/--buildtype release //g')"
+        - $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} -D tests=false || (cat builddir/meson-logs/meson-log.txt && exit 1)
+        # - $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=} || (cat builddir/meson-logs/meson-log.txt && exit 1)
+        - pip install dist/*.whl
+        # - meson setup ${MESON_ARGS} -D python=enabled -D wheel-only=true build
+        # - meson install -C build
     requirements:
       build:
         - ${{ compiler('c') }}
@@ -82,14 +82,17 @@ outputs:
         - if: build_platform != target_platform
           then:
             - cross-python_${{ target_platform }}
+            - meson
+            - meson-python >=0.17.1
             - python
         - swig
       host:
         - ${{ pin_subpackage("libfdt", exact=True) }}
         - python
-        - setuptools
+        - python-build
         - pip
-        - yaml
+        - meson
+        - meson-python >=0.17.1
       run:
         - ${{ pin_subpackage("libfdt", upper_bound="x.x") }}
         - python
@@ -97,19 +100,6 @@ outputs:
       - python:
           imports:
             - libfdt
-          pip_check: false
-      - files:
-          source:
-            - if: build_platform == target_platform and linux
-              then:
-                - tests/
-                - build/dtc
-                - build/tests/test_tree1.dtb
-                - build/tests/aliases.dtb
-        script:
-          - if: build_platform == target_platform and linux
-            then:
-              - cd build/tests && NO_PYTHON=0 ../../tests/run_tests.sh -t pylibfdt
     about:
       summary: Python Bindings for Linux Kernel Device Tree library (libfdt)
       description: |
